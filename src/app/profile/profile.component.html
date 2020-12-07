@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="d-flex flex-row row">
+    <div class="d-flex flex-column col-lg-6 col-md-12 col-xs-12">
+      <form (ngSubmit)="onUserInfoSubmit()" #userInfoForm="ngForm">
+          <div class="form-group">
+              <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  ngModel>
+          </div>
+          <div class="form-group">
+            <input
+                type="text"
+                id="surname"
+                name="surname"
+                required
+                ngModel>
+          </div>
+          <div class="form-group">
+            <input
+                type="date"
+                id="birthday"
+                name="birthday"
+                required
+                ngModel>
+          </div>
+          <div class="form-group">
+            <input
+                type="text"
+                id="country"
+                name="country"
+                required
+                ngModel>
+          </div>
+          <button class="btn btn-primary" type="submit">Login</button>
+      </form>
+    </div>
+  </div>
+</div>

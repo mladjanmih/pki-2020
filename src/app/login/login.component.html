@@ -1,0 +1,48 @@
+<div class="container-fluid">
+    <div class="row" id="login-header-gm">
+        <div class="col-lg-1 col-md-0 col-sm-0"></div>
+        <div class="col-lg-11 col-12 col-sm-12">
+            <div class="d-flex align-items-start flex-column">
+                <h1>EUROPEAN UNIVERSITIES GAMES</h1>
+                <h3>Belgrade 2020</h3>
+            </div>
+        </div>
+        <div class="col-lg-12">
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-4">
+            <p class="float-right">European Universities Games (EUG) is a multi-sport university sports competition governed by the European University Sports Association (EUSA). Participants in these events are European university teams and individuals.</p>
+        </div>
+        <div class="col-lg-1"><div class="vl"></div></div>
+        <div class="col-lg-3">
+            <div class="row">
+                <p>Sign In</p>
+            </div>
+            <div class="row">
+                <form (ngSubmit)="onSubmit()" #f="ngForm">
+                    <div class="form-group login-input">
+                        <input 
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Username"
+                            required
+                            ngModel>
+                    </div>
+                    <div class="form-group login-input">
+                        <input 
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Password"
+                            required
+                            ngModel>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Login</button>                
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
