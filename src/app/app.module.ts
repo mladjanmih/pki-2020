@@ -26,6 +26,14 @@ import { TouristGuideComponent } from './tourist-guide/tourist-guide.component';
 import { UserApiService } from './services/implementations/api/user-api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './profile/profile.component';
+import { MustMatchDirective } from './common/must-match.directive';
+import { LightboxModule } from 'ngx-lightbox';
+import { GalleryComponent } from './common/gallery/gallery.component';
+import { MapComponent } from './common/map/map.component';
+import { CommentsComponent } from './common/comments/comments.component';
+import { AgmCoreModule } from '@agm/core';
+import { CommentMockService } from './services/implementations/mock/comment-mock.service';
+import { NgbModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -37,13 +45,24 @@ import { ProfileComponent } from './profile/profile.component';
     RestaurantComponent,
     VenuesComponent,
     TouristGuideComponent,
-    ProfileComponent
+    ProfileComponent,
+    MustMatchDirective,
+    GalleryComponent,
+    MapComponent,
+    CommentsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    LightboxModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDqNR7WcriySVDiRQ_Z5EVkI0OdAbMnYWo'
+    }),
+    NgbModule,
+    NgbRatingModule
+
   ],
   providers: [
     {provide: AccomodationService, useClass: AccomodationMockService},

@@ -9,4 +9,8 @@ export class VenueService {
   getUserNextVenue(username: string): Observable<Venue>  {
     throw "Not implemented.";
   }
+
+  getUserVenues(username: string): Observable<Venue[]> {
+    throw "Not implemented.";
+  }
 }

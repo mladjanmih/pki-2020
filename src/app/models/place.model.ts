@@ -3,4 +3,5 @@ export class Place {
   summary: string;
   description: string;
   imageUrl: string;
+  geolocation: Geolocation;
 }

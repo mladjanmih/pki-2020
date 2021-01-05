@@ -1,0 +1,61 @@
+<div class="container comments-container">
+  <div class="d-flex flex-row row mt-sm-2">
+    <div class="col-sm-12 d-flex flex-column">
+      <form (ngSubmit)="postReview(f)" #f="ngForm">
+        <div class="form-group mb-1">
+          <textarea
+            class="form-control"
+            id="comment"
+            name="comment"
+            rows="3"
+            placeholder="Enter your comment..."
+            ngModel>
+          </textarea>
+        </div>
+        <div class="form-group mb-1">
+          <ngb-rating
+            [max]="5"
+            name="rating"
+            id="rating"
+            ngModel
+            required>
+            <ng-template let-fill="fill" let-index="index">
+              <span class="star" [class.filled]="fill === 100">&#9733;</span>
+            </ng-template>
+          </ngb-rating>
+        </div>
+        <div class="form-group mb-1">
+          <input
+            type="checkbox"
+            id="anonymous"
+            name="anonymous"
+            ngModel
+          >
+          <label for="anonymous">Anonymous</label>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+  <div class="d-flex flex-row row mt-sm-4">
+    <div class="col-sm-12 d-flex flex-column">
+      <div *ngFor="let comment of comments" class="row flex-row d-flex">
+        <div class="col-sm-12">
+          <div class="d-flex flex-row row">
+            <div class="d-flex flex-col col-sm-8 justify-content-start">
+              <p class="comment-author">{{ comment.author }}</p>
+            </div>
+            <div class="d-flex flex-col col-sm-4 justify-content-end">
+              <p class="comment-date">{{ comment.date | date:'d.M.yyyy' }}</p>
+            </div>
+          </div>
+          <div class="d-flex flex-row row">
+            <div class="col-sm-12">
+            <p class="comment-content">{{ comment.comment }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

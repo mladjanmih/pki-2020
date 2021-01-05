@@ -68,4 +68,19 @@ export class VenueMockService extends VenueService {
       }
     }).pipe(first());
   }
+
+  getUserVenues(username: string): Observable<Venue[]> {
+    return new Observable<Venue[]>(subscriber => {
+      const userVenues = [];
+      if (this.userVenues[username]) {
+        for(let i = 0; i < this.userVenues[username].length; ++i) {
+          userVenues.push(this.venues[this.userVenues[username][i]])
+        }
+      }
+      else {
+        subscriber.next(null);
+      }
+      subscriber.next(userVenues);
+    }).pipe(first());
+  }
 }

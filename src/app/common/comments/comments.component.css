@@ -1,0 +1,24 @@
+.comments-container {
+  overflow: auto;
+  max-height: 25em;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.comment-author {
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+
+.comment-date {
+  font-weight: lighter;
+  margin-bottom: 0px;
+  font-size: 0.9em
+}
+
+.star {
+  font-size: 1.5rem;
+  color: #b0c4de;
+}
+.filled {
+  color: #1e90ff;
+}

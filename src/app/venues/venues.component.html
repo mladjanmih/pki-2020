@@ -1,1 +1,28 @@
-<p>venues works!</p>
+<div class="container p-5" style="display:flex; justify-content: center;">
+  <div class="row  d-flex flex-row">
+    <div class="col d-flex flex-col col-sm-12 col-md-12 col-lg-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Date</th>
+            <th scope="col">Match</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let venue of userVenues; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ venue.date | date:'d.M.yyyy. H:mm' }}</td>
+            <td>{{ venue.name }}</td>
+            <td>
+              <button class="btn btn-primary">
+                Details
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
