@@ -1,8 +1,8 @@
-<div class="container">
+<div class="container d-flex justify-content-center">
   <div class="d-flex row flex-row">
     <div class="col-lg-12 d-flex flex-column">
       <div class="d-flex row flex-row">
-        <div class="col-lg-12 d-flex flex-column" id="accomodation-info">
+        <div class="col-sm-10 col-lg-12 d-flex flex-column" id="accomodation-info">
           <div class="d-flex row flex-row">
             <div class="p-2 col">
               <h4>Accomodation</h4>
@@ -10,7 +10,7 @@
             </div>
           </div>
           <div class="d-flex row flex-row">
-            <div class="col-sm-12 col-lg-3  d-flex flex-column justify-content-start">
+            <div class="col-sm-10 col-lg-3  d-flex flex-column justify-content-start">
               <p>Name: {{ accomodation.name }}</p>
               <p>Room: {{ accomodation.room }}</p>
               <p>Address: {{ accomodation.address }}</p>
@@ -22,11 +22,13 @@
                 <button class="btn btn-primary" (click)="open(content)">Change Accomodation</button>
               </div>
               <app-gallery [images]="accomodation.images"></app-gallery>
+              <br>
             </div>
-            <div class="col-sm-12 col-lg-5 d-flex flex-column">
+            <div class="col-sm-10 col-lg-5 d-flex flex-column">
               <app-map [lat]="44.8238844" [long]="20.3982002"></app-map>
+              <br>
             </div>
-            <div class="d-flex col-sm-12 col-lg-4 flex-col justify-content-center ">
+            <div class="d-flex col-sm-10 col-lg-4 flex-col justify-content-center ">
               <app-comments [resourceType]="'accomodation'" [resourceId]="accomodation.id"></app-comments>
             </div>
           </div>

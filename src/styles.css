@@ -28,3 +28,13 @@ body {
     border-left: 2px solid black;
     height: 100%
   }
+
+.modal-header  {
+  background-color: #e4f9ff;
+}
+.modal-footer  {
+  background-color: #e4f9ff;
+}
+.modal-body {
+    background-color: #e4f9ff;
+  }

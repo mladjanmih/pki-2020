@@ -1,15 +1,15 @@
 <div class="container d-flex">
   <div class="flex-column">
     <div *ngFor="let place of places" class="row mt-2">
-      <div class="col-sm-3 flex-column d-flex" style="justify-content: center;">
+      <div class="col-sm-12 col-md-12 col-lg-3 d-flex justify-content-sm-center justify-content-center justify-content-md-center justify-content-lg-start">
         <img class="image" [src]="place.imageUrl" (click)="open(place)" style="cursor:pointer">
       </div>
-      <div class="col-sm-9 flex-column">
+      <div class="col-sm-12 col-md-12 col-lg-9">
         <div class="row flex-row">
-          <div class="col-sm-11">
-            <p class="mb-0"><b>{{ place.name }}</b></p>
+          <div class="col-10 col-sm-11 col-md-11 col-lg-11">
+            <p class="mb-0" style="display:inline-block"><b>{{ place.name }}</b></p>
           </div>
-          <div class="col-sm-1 flex-row d-inline-flex align-items-start" >
+          <div class="col-1 col-sm-1 col-md-1 col-lg-1 flex-row d-inline-flex justify-content-center justify-content-sm-center justify-content-lg-start" >
             <fa-icon [icon]="faHeart" style="color: #0fabbc"></fa-icon>
             <p class="mb-0"><b>{{ place.likes }}</b></p>
           </div>

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light">
+<!-- <nav class="navbar navbar-expand-lg navbar-light">
     <a class="navbar-brand" href="#">
         <div>
             <img src="../../assets/logo.png" id="logo" style="max-height:2em; height: auto; width: auto">
@@ -63,4 +63,80 @@
     </div>
 
   </nav>
-<br><br>
+<br><br> -->
+
+<nav class="navbar navbar-expand-lg navbar-light">
+  <a href="#" class="navbar-brand">
+    <img src="../../assets/logo.png" widht="30" height="30">
+  </a>
+  <button class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+          (click)="toggleCollapsed()">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div [ngClass]="{'collapse': collapsed, 'navbar-collapse': true}" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto" *ngIf="!isAdmin()">
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink='/'>Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item"  routerLinkActive="active">
+        <a class="nav-link"  routerLink="/accomodation">Accomodation</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/restaurant">Restaurant</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/venues">Venues</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/guide">Tourist Guide</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav mr-auto" *ngIf="isAdmin()">
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink='/'>Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item"  routerLinkActive="active">
+        <a class="nav-link"  routerLink="/venues/management">Venue Management</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/management">Accomodation & Restaurant Management</a>
+      </li>
+    </ul>
+    <div class="navbar-nav">
+      <div class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/profile">
+          <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-person-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z"/>
+            <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+            <path fill-rule="evenodd" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"/>
+          </svg>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" (click)="logout()">Logout</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<br>
+<!--
+
+<ul ngbNav #nav="ngbNav" class="nav-tabs">
+  <li ngbNavItem>
+    <a ngbNavLink>First</a>
+    <ng-template ngbNavContent>First content</ng-template>
+  </li>
+  <li ngbNavItem>
+    <a ngbNavLink>Second</a>
+    <ng-template ngbNavContent>Second content</ng-template>
+  </li>
+</ul>
+<div [ngbNavOutlet]="nav"></div> -->

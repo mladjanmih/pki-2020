@@ -11,7 +11,7 @@ import { AuthenticationService } from '../services/contracts/authentication.serv
 export class HeaderComponent implements OnInit {
 
   constructor(private authenticationService: AuthenticationService, private router: Router) { }
-
+  collapsed = true;
   ngOnInit(): void {
   }
 
@@ -27,5 +27,9 @@ export class HeaderComponent implements OnInit {
 
   authenticated(): boolean {
     return this.authenticationService.isAuthenticated();
+  }
+
+  toggleCollapsed() {
+    this.collapsed = !this.collapsed;
   }
 }
