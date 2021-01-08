@@ -1,29 +1,53 @@
-<div class="container mt-lg-5 mt-md-1 mt-xs-1" *ngIf="!isFetching()">
-  <div class="d-flex flex-row row">
-  <div id="accomodation-restaurant-venue" class="d-flex flex-column col-lg-6 col-md-12 col-xs-12">
-    <div class="p-2">
-      <h4>Accomodation & Restaurant</h4>
-      <hr/>
-      <p>Accomodation: {{ accomodation.name}} {{accomodation.room}}</p>
-      <p>Restaurant: {{ restaurant.name}}</p>
-    </div>
-    <div class="p-2">
-      <h4>Next Venue Information</h4>
-      <hr/>
-      <p>{{ venue.name }}</p>
-      <p>Location: {{ venue.location }}</p>
-      <p>Date: {{ venue.date | date:'d.M.yyyy. H:mm'}}</p>
-    </div>
-  </div>
-  <div id="tourist-guide" class="d-flex flex-column col-lg-6 col-md-12 col-xs-12">
-    <div class="p-2">
-      <h4>Tourist Guide: {{ place.name }}</h4>
-      <hr/>
-      <div class="d-flex">
-        <img [src]="place.imageUrl" style="max-height: 10em; height: auto; width: auto">
-        <p class="p-2">{{ place.summary }}</p>
+<div *ngIf="!isAdmin()">
+  <div class="container mt-lg-5 mt-md-1 mt-xs-1" *ngIf="!isFetching()">
+    <div class="d-flex flex-row row">
+    <div id="accomodation-restaurant-venue" class="d-flex flex-column col-lg-6 col-md-12 col-xs-12">
+      <div class="p-2" *ngIf="accomodation">
+        <h4>Accomodation & Restaurant</h4>
+        <hr/>
+        <p>Accomodation: {{ accomodation.name}} {{accomodation.room}}</p>
+        <p>Restaurant: {{ restaurant.name}}</p>
+      </div>
+      <div class="p-2" *ngIf="!accomodation">
+        <p>Accomodation not assigned!</p>
+      </div>
+      <div class="p-2" *ngIf="venue">
+        <h4>Next Venue Information</h4>
+        <hr/>
+        <p>{{ venue.name }}</p>
+        <p>Location: {{ venue.location }}</p>
+        <p>Date: {{ venue.date | date:'d.M.yyyy. H:mm'}}</p>
+      </div>
+      <div class="p-2" *ngIf="!venue">
+        <p>There are no next venues!</p>
       </div>
     </div>
+    <div id="tourist-guide" class="d-flex flex-column col-lg-6 col-md-12 col-xs-12">
+      <div class="p-2">
+        <h4>Tourist Guide: {{ place.name }}</h4>
+        <hr/>
+        <div class="d-flex">
+          <img [src]="place.imageUrl" style="max-height: 10em; height: auto; width: auto">
+          <p class="p-2">{{ place.summary }}</p>
+        </div>
+      </div>
+    </div>
+    </div>
   </div>
+</div>
+<div *ngIf="isAdmin()">
+  <div class="container d-flex justify-content-center flex-column">
+    <div class="row d-flex justify-content-center">
+      <div class="col col-sm-12 justify-content-center d-flex flex-column">
+        <p style="font-size: 3em; text-align: center;">{{ accomodationChangeRequests.length + restaurantChangeRequests.length}}</p>
+        <p style="text-align: center;">Requests for changing accomodation or restaurant</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-sm-12 d-flex justify-content-center flex-column">
+        <p style="font-size: 3em; text-align: center;">{{ unscheduledVenues.length }}</p>
+        <p style="text-align: center;">Unscheduled venues</p>
+      </div>
+    </div>
   </div>
 </div>

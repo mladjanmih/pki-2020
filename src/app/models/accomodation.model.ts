@@ -6,4 +6,5 @@ export class Accomodation {
   rating: number;
   busLines: string;
   room?: string;
+  images: string[];
 }

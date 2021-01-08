@@ -55,11 +55,9 @@ export class ProfileComponent implements OnInit {
       );
 
     }
-    console.log(this.userInfoForm);
   }
 
   onChangePassword() {
-    // console.log(this.changePasswordForm);
     this.isUserSubmitted = true;
     this.isUserSubmitFinished = false;
     this.passwordSubmitError = null;

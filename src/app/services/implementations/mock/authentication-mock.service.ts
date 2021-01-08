@@ -13,7 +13,7 @@ export class AuthenticationMockService extends AuthenticationService implements 
     private subscription: Subscription;
     public constructor(private userService: UserService) {
       super();
-      this._isAuthenticated = true;
+     this._isAuthenticated = true;
       this.authenticatedUser =
       {
           username: 'user',

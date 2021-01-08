@@ -16,7 +16,7 @@
             <td>{{ venue.date | date:'d.M.yyyy. H:mm' }}</td>
             <td>{{ venue.name }}</td>
             <td>
-              <button class="btn btn-primary">
+              <button class="btn btn-primary" (click)="open(venue)">
                 Details
               </button>
             </td>

@@ -44,10 +44,8 @@ export class AccomodationComponent implements OnInit {
   }
 
   open(content) {
-    console.log("open");
     this.modal = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', centered: true});
     this.modal.result.then((result) => {
-      console.log(result);
       this.modal = result;
 
     }, (reason) => {
@@ -55,7 +53,7 @@ export class AccomodationComponent implements OnInit {
   }
 
   saveAndClose() {
-    this.accomodationService.postChangeRequest(this.accomodation.id, this.user.username, this.changeAccomodationReason)
+    this.accomodationService.postChangeRequest(this.accomodation.id, this.user, this.changeAccomodationReason)
     .pipe(first())
     .subscribe((result: UserUpdateResult) => {
       if (result.success) {

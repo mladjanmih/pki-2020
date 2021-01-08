@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
+import { ChangeRequest } from 'src/app/models/change-request.model';
 import { Comment } from 'src/app/models/comment.model';
 import { ResourceReviews } from 'src/app/models/resource-reviews.model';
+import { ResourceType } from 'src/app/models/resource-type.enum';
 import { Restaurant } from 'src/app/models/restaurant.model';
+import { UserUpdateResult } from 'src/app/models/user-update-result.model';
+import { User } from 'src/app/models/user.model';
 import { RestaurantService } from '../../contracts/restaurant.service';
+import { UserService } from '../../contracts/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +22,12 @@ export class RestaurantMockService extends RestaurantService {
       address : 'Studentska 4',
       busLines: '77, 76, 75, 74, 611',
       phoneNumber: '011456832',
-      rating: 4.1
+      rating: 4.1,
+      images: [
+        'https://www.studentskizivot.com/wp-content/uploads/2016/07/studentski-grad-1.jpg',
+        'https://www.turizzam.com/upload/objects/1429784330_cpvLHw/Soba_1.jpg',
+        'https://www.turizzam.com/upload/objects/1429784330_cpvLHw/soba_3.jpg'
+      ]
     },
     2: {
       id: 2,
@@ -25,7 +35,11 @@ export class RestaurantMockService extends RestaurantService {
       address : 'Ljubice Lukovic 1',
       busLines: '65, 66, 74',
       phoneNumber: '011461242',
-      rating: 3.6
+      rating: 3.6,
+      images: [
+        'https://fakulteti.edukacija.rs/wp-content/uploads/2014/08/patris-lumumba-beograd-1.jpg',
+        'https://www.kurir.rs/data/images/2017/09/04/14/1274871_studenjak-soba-studenti-foto-zorana-jevtic_ls.jpg'
+      ]
     }
   }
 
@@ -54,6 +68,20 @@ export class RestaurantMockService extends RestaurantService {
     ])
   };
 
+  private restaurantChangeRequests: {[key: string]: ChangeRequest} = {
+    "novak.djokovic": new ChangeRequest("novak.djokovic", "Novak", "Djokovic", 1, "Losa hrana", ResourceType.RESTAURANT),
+    "user": new ChangeRequest("user", "Demo", "User", 2, "just testing the restaurant feature", ResourceType.RESTAURANT)
+  }
+
+  getRestaurants(): Observable<Restaurant[]> {
+    return new Observable<Restaurant[]>(subscriber => {
+      const res = [];
+      for (let id in this.restaurants) {
+        res.push(this.restaurants[id]);
+      }
+      subscriber.next(res);
+    });
+  }
   getRestaurant(id: number) : Observable<Restaurant> {
     return new Observable<Restaurant>(subscriber => {
       if (this.restaurants[id]) {
@@ -110,6 +138,67 @@ export class RestaurantMockService extends RestaurantService {
       else {
         subscriber.next(null);
       }
+    });
+  }
+
+  postChangeRequest(resourceId: number, user: User, reason: string): Observable<UserUpdateResult> {
+    return new Observable<UserUpdateResult>(subscriber => {
+      if (!user) {
+        subscriber.next(new UserUpdateResult(false, "User does not exists!"));
+      }
+      if (this.restaurantChangeRequests[user.username]) {
+        subscriber.next(new UserUpdateResult(false, "Change request already submitted!"));
+      }
+      else {
+        this.restaurantChangeRequests[user.username] = new ChangeRequest(user.username, user.firstName, user.lastName, resourceId, reason, ResourceType.RESTAURANT);
+        subscriber.next(new UserUpdateResult(true));
+      }
+    });
+  }
+
+  getChangeRequests() : Observable<ChangeRequest[]> {
+    return new Observable<ChangeRequest[]>(subscriber => {
+
+      const cr = [];
+      for(let key in this.restaurantChangeRequests) {
+        cr.push(this.restaurantChangeRequests[key]);
+      }
+
+      subscriber.next(cr);
+    });
+  }
+
+  acceptChangeRequest(cr: ChangeRequest, restaurantId: number): Observable<UserUpdateResult> {
+    console.log(cr);
+    console.log(restaurantId);
+    return new Observable<UserUpdateResult>(subscriber => {
+      console.log(cr);
+      console.log(restaurantId);
+      if (!cr || !restaurantId) {
+        subscriber.next(new UserUpdateResult(false, "Input data not valid."));
+        return;
+      }
+
+
+      if (this.userRestaurants[cr.username]) {
+        this.userRestaurants[cr.username] = restaurantId;
+        subscriber.next(new UserUpdateResult(true));
+      }
+      else {
+        subscriber.next(new UserUpdateResult(false, "User does not have an accomodation."));
+      }
+
+      delete this.restaurantChangeRequests[cr.username];
+      this.restaurantsUpdated.emit();
+    });
+  }
+
+  rejectChangeRequest(cr: ChangeRequest): Observable<UserUpdateResult> {
+    return new Observable<UserUpdateResult>(subscriber => {
+      delete this.restaurantChangeRequests[cr.username];
+      subscriber.next(new UserUpdateResult(true));
+      this.restaurantsUpdated.emit();
+
     });
   }
 }

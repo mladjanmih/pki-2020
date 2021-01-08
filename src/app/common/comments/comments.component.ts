@@ -41,12 +41,10 @@ export class CommentsComponent implements OnInit {
   postReview(form: NgForm) {
     const user = this.authenticationService.authenticate();
     const comment = new Comment(form.value.anonymous ? "Anonymous" : `${user.firstName} ${user.lastName}`, new Date(), form.value.rating, form.value.comment);
-    console.log(form);
     if (this.resourceType === "accomodation") {
       this.accomodationService.putComment(this.resourceId, comment)
         .pipe(first())
         .subscribe((comments: Comment[]) => {
-          console.log(comments);
           this.comments = comments;
         });
     }

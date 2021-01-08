@@ -14,8 +14,6 @@ export class MapComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.lat + "");
-    console.log(this.long + "")
     if (!this.markers) {
       this.markers = [];
     }

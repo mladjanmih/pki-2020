@@ -35,6 +35,15 @@ export class UserMockService extends UserService {
       role: UserRole.PLAYER,
       country: 'USA',
       birthday: new Date(1995, 7, 15)
+    },
+    "admin": {
+      username: 'admin',
+      firstName: 'Demo Admin',
+      lastName: 'User',
+      password: 'admin',
+      role: UserRole.ADMIN,
+      country: 'RS',
+      birthday: new Date(1996, 7, 15)
     }
   }
 

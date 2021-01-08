@@ -1,5 +1,7 @@
 export class Venue {
-  name: string;
-  location: string;
-  date: Date;
+  constructor(public id: number, public sport: string, public name: string, public location?: string, public date?: Date) {}
+  scheduled(): boolean {
+    const isScheduled = this.location != null && this.date != null;
+    return isScheduled;
+  }
 }

@@ -5,8 +5,10 @@ import { Accomodation } from 'src/app/models/accomodation.model';
 import { ChangeRequest } from 'src/app/models/change-request.model';
 import { Comment } from 'src/app/models/comment.model';
 import { ResourceReviews } from 'src/app/models/resource-reviews.model';
+import { ResourceType } from 'src/app/models/resource-type.enum';
 import { UserAccomodation } from 'src/app/models/user-accomodation.model';
 import { UserUpdateResult } from 'src/app/models/user-update-result.model';
+import { User } from 'src/app/models/user.model';
 import { AccomodationService } from '../../contracts/accomodation.service';
 
 @Injectable({
@@ -21,7 +23,12 @@ export class AccomodationMockService extends AccomodationService {
       address : 'Studentska 4',
       busLines: '77, 76, 75, 74, 611',
       phoneNumber: '011456832',
-      rating: 4.1
+      rating: 4.1,
+      images: [
+        'https://www.studentskizivot.com/wp-content/uploads/2016/07/studentski-grad-1.jpg',
+        'https://www.turizzam.com/upload/objects/1429784330_cpvLHw/Soba_1.jpg',
+        'https://www.turizzam.com/upload/objects/1429784330_cpvLHw/soba_3.jpg'
+      ]
     },
     2: {
       id: 2,
@@ -29,7 +36,11 @@ export class AccomodationMockService extends AccomodationService {
       address : 'Ljubice Lukovic 1',
       busLines: '65, 66, 74',
       phoneNumber: '011461242',
-      rating: 3.6
+      rating: 3.6,
+      images: [
+        'https://fakulteti.edukacija.rs/wp-content/uploads/2014/08/patris-lumumba-beograd-1.jpg',
+        'https://www.kurir.rs/data/images/2017/09/04/14/1274871_studenjak-soba-studenti-foto-zorana-jevtic_ls.jpg'
+      ]
     }
   }
 
@@ -37,6 +48,10 @@ export class AccomodationMockService extends AccomodationService {
     "user" : {
       accomodationId: 1,
       room: "Block III, Room 346"
+    },
+    "novak.djokovic": {
+      accomodationId: 2,
+      room: "Block II, Room 753"
     }
   }
 
@@ -59,7 +74,17 @@ export class AccomodationMockService extends AccomodationService {
   };
 
   private accomodationChangeRequests: {[key: string]: ChangeRequest} = {
-
+    "novak.djokovic": new ChangeRequest("novak.djokovic", "Novak", "Djokovic", 1, "Los smestaj", ResourceType.ACCOMODATION),
+    "user": new ChangeRequest("user", "Demo", "User", 2, "just testing the accomodation feature", ResourceType.ACCOMODATION)
+  }
+  getAccomodations(): Observable<Accomodation[]> {
+    return new Observable<Accomodation[]>(subscriber => {
+      const acc = [];
+      for (let id in this.accomodations) {
+        acc.push(this.accomodations[id]);
+      }
+      subscriber.next(acc);
+    });
   }
 
   getAccomodation(id: number): Observable<Accomodation> {
@@ -123,15 +148,55 @@ export class AccomodationMockService extends AccomodationService {
     });
   }
 
-  postChangeRequest(resourceId: number, username: string, reason: string): Observable<UserUpdateResult> {
+  postChangeRequest(resourceId: number, user: User, reason: string): Observable<UserUpdateResult> {
     return new Observable<UserUpdateResult>(subscriber => {
-      if (this.accomodationChangeRequests[username]) {
+      if (this.accomodationChangeRequests[user.username]) {
         subscriber.next(new UserUpdateResult(false, "Change request already submitted!"));
       }
       else {
-        this.accomodationChangeRequests[username] = new ChangeRequest(username, resourceId, reason);
+        this.accomodationChangeRequests[user.username] = new ChangeRequest(user.username, user.firstName, user.lastName, resourceId, reason, ResourceType.ACCOMODATION);
         subscriber.next(new UserUpdateResult(true));
       }
+    });
+  }
+
+  getChangeRequests() : Observable<ChangeRequest[]> {
+    return new Observable<ChangeRequest[]>(subscriber => {
+      const cr = [];
+      for(let key in this.accomodationChangeRequests) {
+        cr.push(this.accomodationChangeRequests[key]);
+      }
+
+      subscriber.next(cr);
+    });
+  }
+
+  acceptChangeRequest(cr: ChangeRequest, accomodationId: number, room: string): Observable<UserUpdateResult> {
+    return new Observable<UserUpdateResult>(subscriber => {
+      if (!cr || !accomodationId || !room) {
+        subscriber.next(new UserUpdateResult(false, "Input data not valid."));
+        return;
+      }
+
+      if (this.userAccomodations[cr.username]) {
+        this.userAccomodations[cr.username].accomodationId = accomodationId;
+        this.userAccomodations[cr.username].room = room;
+        subscriber.next(new UserUpdateResult(true));
+      }
+      else {
+        subscriber.next(new UserUpdateResult(false, "User does not have an accomodation."));
+      }
+
+      delete this.accomodationChangeRequests[cr.username];
+      this.accomodationsUpdated.emit();
+    });
+  }
+
+  rejectChangeRequest(cr: ChangeRequest): Observable<UserUpdateResult> {
+    return new Observable<UserUpdateResult>(subscriber => {
+      delete this.accomodationChangeRequests[cr.username];
+      subscriber.next(new UserUpdateResult(true));
+      this.accomodationsUpdated.emit();
     });
   }
 }

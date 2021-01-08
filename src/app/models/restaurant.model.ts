@@ -5,4 +5,5 @@ export class Restaurant {
   phoneNumber: string;
   rating: number;
   busLines: string;
+  images: string[];
 }

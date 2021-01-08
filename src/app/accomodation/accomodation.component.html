@@ -10,7 +10,7 @@
             </div>
           </div>
           <div class="d-flex row flex-row">
-            <div class="col-sm-12 col-lg-3  d-flex flex-column">
+            <div class="col-sm-12 col-lg-3  d-flex flex-column justify-content-start">
               <p>Name: {{ accomodation.name }}</p>
               <p>Room: {{ accomodation.room }}</p>
               <p>Address: {{ accomodation.address }}</p>
@@ -19,9 +19,9 @@
               <p>Bus lines: {{ accomodation.busLines }}</p>
               <!-- Button trigger modal -->
               <div class="form-group">
-                <button class="btn  btn-primary" (click)="open(content)">Launch demo modal</button>
+                <button class="btn btn-primary" (click)="open(content)">Change Accomodation</button>
               </div>
-              <app-gallery></app-gallery>
+              <app-gallery [images]="accomodation.images"></app-gallery>
             </div>
             <div class="col-sm-12 col-lg-5 d-flex flex-column">
               <app-map [lat]="44.8238844" [long]="20.3982002"></app-map>
@@ -76,6 +76,3 @@
       <button type="button" class="btn btn-primary" (click)="saveAndClose()">Save</button>
     </div>
 </ng-template>
-
-
-<hr>

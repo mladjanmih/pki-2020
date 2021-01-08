@@ -34,7 +34,14 @@ import { CommentsComponent } from './common/comments/comments.component';
 import { AgmCoreModule } from '@agm/core';
 import { CommentMockService } from './services/implementations/mock/comment-mock.service';
 import { NgbModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { PlacesListComponent } from './tourist-guide/places-list/places-list.component';
+import { PlaceDetailsComponent } from './tourist-guide/place-details/place-details.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { VenueDetailsComponent } from './venues/venue-details/venue-details.component';
+import { VenueManagementComponent } from './venues/venue-management/venue-management.component';
+import { AccomodationRestaurantManagementComponent } from './accomodation-restaurant-management/accomodation-restaurant-management.component';
+import { ScheduleVenueComponent } from './venues/venue-management/schedule-venue/schedule-venue.component';
+import { ChangeRequestComponent } from './accomodation-restaurant-management/change-request/change-request.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +56,14 @@ import { NgbModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
     MustMatchDirective,
     GalleryComponent,
     MapComponent,
-    CommentsComponent
+    CommentsComponent,
+    PlacesListComponent,
+    PlaceDetailsComponent,
+    VenueDetailsComponent,
+    VenueManagementComponent,
+    AccomodationRestaurantManagementComponent,
+    ScheduleVenueComponent,
+    ChangeRequestComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +75,8 @@ import { NgbModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
       apiKey: 'AIzaSyDqNR7WcriySVDiRQ_Z5EVkI0OdAbMnYWo'
     }),
     NgbModule,
-    NgbRatingModule
+    NgbRatingModule,
+    FontAwesomeModule
 
   ],
   providers: [

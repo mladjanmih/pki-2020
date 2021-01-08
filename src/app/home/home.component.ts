@@ -8,6 +8,9 @@ import { VenueService } from '../services/contracts/venue.service';
 import { Venue } from '../models/venue.model';
 import { TouristGuideService } from '../services/contracts/tourist-guide.service';
 import { Place } from '../models/place.model';
+import { first } from 'rxjs/operators';
+import { UserRole } from '../models/user.model';
+import { ChangeRequest } from '../models/change-request.model';
 
 @Component({
   selector: 'app-home',
@@ -33,41 +36,73 @@ export class HomeComponent implements OnInit {
     private isFetchingVenue: boolean;
     private isFetchingPlace: boolean;
 
+    accomodationChangeRequests : ChangeRequest[] = [];
+    restaurantChangeRequests : ChangeRequest[] = [];
+    unscheduledVenues: Venue[] = [];
   ngOnInit(): void {
-    console.log("HomeComponent: ngOninit");
     const user = this.authService.authenticate();
+    if (user && user.role === UserRole.PLAYER) {
+      this.isFetchingAccomodation = true;
+      this.accomodationService
+      .getUserAccomodation(user.username)
+      .subscribe((a: Accomodation)  => {
+        this.isFetchingAccomodation = false;
+        this.accomodation = a;
+      });
 
-    this.isFetchingAccomodation = true;
-    this.accomodationService
-    .getUserAccomodation(user.username)
-    .subscribe((a: Accomodation)  => {
-      this.isFetchingAccomodation = false;
-      this.accomodation = a;
-    });
+      this.isFetchingRestaurant = true;
+      this.restaurantService
+      .getUserRestaurant(user.username)
+      .subscribe((r: Restaurant)   => {
+        this.isFetchingRestaurant = false;
+        this.restaurant = r;
+      });
 
-    this.isFetchingRestaurant = true;
-    this.restaurantService
-    .getUserRestaurant(user.username)
-    .subscribe((r: Restaurant)   => {
-      this.isFetchingRestaurant = false;
-      this.restaurant = r;
-    });
+      this.isFetchingVenue = true;
+      this.venueService
+      .getUserNextVenue(user.username)
+      .subscribe((v: Venue)   => {
+        this.isFetchingVenue = false;
+        this.venue = v;
+      });
 
-    this.isFetchingVenue = true;
-    this.venueService
-    .getUserNextVenue(user.username)
-    .subscribe((v: Venue)   => {
-      this.isFetchingVenue = false;
-      this.venue = v;
-    });
+      this.isFetchingPlace = true;
+      this.touristGuideService
+      .getRandomPlace()
+      .pipe(first())
+      .subscribe((p: Place)   => {
+        this.isFetchingPlace = false;
+        this.place = p;
+      });
+    }
+    else if (user) {
+      this.isFetchingAccomodation = true;
+      this.accomodationService.getChangeRequests()
+      .pipe(first())
+      .subscribe((cr: ChangeRequest[]) => {
+        this.isFetchingAccomodation = false;
+        this.accomodationChangeRequests = cr;
+      })
 
-    this.isFetchingPlace = true;
-    this.touristGuideService
-    .getRandomPlace()
-    .subscribe((p: Place)   => {
+      this.isFetchingRestaurant = true;
+      this.restaurantService.getChangeRequests()
+      .pipe(first())
+      .subscribe((cr: ChangeRequest[]) => {
+        this.isFetchingRestaurant = false;
+        this.restaurantChangeRequests = cr;
+      });
+
+
+      this.isFetchingVenue = true;
+      this.venueService.getUnscheduledVenues()
+      .pipe(first())
+      .subscribe((v: Venue[]) => {
+        this.isFetchingVenue = false;
+        this.unscheduledVenues = v;
+      })
+
       this.isFetchingPlace = false;
-      this.place = p;
-    });
+    }
 
   }
 
@@ -75,4 +110,8 @@ export class HomeComponent implements OnInit {
     return this.isFetchingRestaurant || this.isFetchingAccomodation || this.isFetchingVenue || this.isFetchingPlace;
   }
 
+  isAdmin(): boolean {
+    const user = this.authService.authenticate();
+    return user && user.role === UserRole.ADMIN;
+  }
 }

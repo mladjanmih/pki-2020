@@ -16,10 +16,10 @@ export class GalleryComponent implements OnInit {
   }
 
   ngOnInit() {
-    for (let i = 1; i <= 4; i++) {
-      const src = 'https://themyth92.com/project/ngx-lightbox/demo/img/image' + i + '.jpg';
-      const caption = 'Image ' + i + ' caption here';
-      const thumb = 'https://themyth92.com/project/ngx-lightbox/demo/img/image' + i + '-thumb.jpg';
+    for (let i = 0; i < this.images.length; i++) {
+      const src = this.images[i];
+      const caption = 'Image ' + i;
+      const thumb = this.images[i];
       const album = {
          src: src,
          caption: caption,
@@ -31,7 +31,6 @@ export class GalleryComponent implements OnInit {
   }
 
   open(index: number): void {
-    console.log("on Open");
     // open lightbox
     this._lightbox.open(this.albums, index);
   }

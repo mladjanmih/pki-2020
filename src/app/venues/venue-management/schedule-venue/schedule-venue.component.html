@@ -1,0 +1,43 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Venue Details</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="container">
+    <div class="d-flex row flex-row">
+      <div class="col-lg-12 d-flex flex-column" id="accomodation-info">
+        <p class="mb-1"><b>Sport:</b> {{ venue.sport }}</p>
+        <p class="mb-2 mt-0"><b>Name:</b> {{ venue.name }}</p>
+        <form #schedule="ngForm" (ngSubmit)="onVenueSchedule(schedule)">
+          <div class="form-group row">
+            <label for="birthday" class="col-sm-4 col-form-label">Choose place:</label>
+            <div class="col-sm-8">
+              <select name="place"
+              class="form-control"
+              id="place"
+              required
+              ngModel>
+                <option [value]="place" *ngFor="let place of places">{{ place }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="birthday" class="col-sm-4 col-form-label">Match Date:</label>
+            <div class="col-sm-8">
+              <input
+                  type="date"
+                  class="form-control"
+                  id="matchDate"
+                  name="matchDate"
+                  required
+                  ngModel>
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit">Schedule</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
