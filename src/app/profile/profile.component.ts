@@ -35,6 +35,11 @@ export class ProfileComponent implements OnInit {
   }
 
   onUserInfoSubmit() {
+    if (!this.userInfoForm.valid) {
+      this.userSubmitError = "Submitted data is invalid! All fields are required!"
+      return;
+    }
+
     if (this.userInfoForm.dirty) {
       this.user.firstName = this.userInfoForm.value.name;
       this.user.lastName = this.userInfoForm.value.surname;

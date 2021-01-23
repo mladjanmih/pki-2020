@@ -23,6 +23,7 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.authenticationService.logout();
     this.router.navigate(['']);
+    this.onClick();
   }
 
   authenticated(): boolean {
@@ -31,5 +32,11 @@ export class HeaderComponent implements OnInit {
 
   toggleCollapsed() {
     this.collapsed = !this.collapsed;
+  }
+
+  onClick() {
+    if (!this.collapsed) {
+      this.collapsed = true;
+    }
   }
 }

@@ -5,7 +5,7 @@
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Date</th>
+            <th class="d-none d-sm-none d-md-block" scope="col">Date</th>
             <th scope="col">Match</th>
             <th scope="col"></th>
           </tr>
@@ -13,8 +13,8 @@
         <tbody>
           <tr *ngFor="let venue of userVenues; let i = index">
             <th scope="row">{{ i + 1 }}</th>
-            <td>{{ venue.date | date:'d.M.yyyy. H:mm' }}</td>
-            <td>{{ venue.name }}</td>
+            <td class="d-none d-sm-none d-md-block" scope="row">{{ venue.date | date:'d.M.yyyy. H:mm' }}</td>
+            <td scope="row">{{ venue.name }}</td>
             <td>
               <button class="btn btn-primary" (click)="open(venue)">
                 Details

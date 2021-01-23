@@ -12,6 +12,7 @@ import { AuthenticationService } from '../services/contracts/authentication.serv
 })
 export class LoginComponent implements OnInit {
   @ViewChild("f", { static : false }) signupForm: NgForm;
+  public loginError = false;
   constructor(private authService: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {
@@ -21,10 +22,21 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if (!this.signupForm.valid) {
+      return;
+    }
     const result = this.authService.login(this.signupForm.value.username, this.signupForm.value.password);
     result.pipe(first()).subscribe((user: User) => {
-      if (user)
+      if (user) {
+        this.loginError = false;
         this.router.navigate(['']);
-    }, error => console.log(error));
+      }
+      else {
+        this.loginError = true;
+      }
+    }, error => {
+      console.warn(error);
+      this.loginError = true;
+    });
   }
 }

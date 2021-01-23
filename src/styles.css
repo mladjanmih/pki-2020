@@ -12,6 +12,11 @@
     font-family: 'comicsans'
 }
 
+.form-error-message {
+  color: red;
+  font-size: 0.75em
+}
+
 body {
     background: url(assets/Background2.png) no-repeat center center fixed;
     -webkit-background-size: cover;
