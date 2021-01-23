@@ -50,6 +50,7 @@ export class AuthenticationMockService extends AuthenticationService implements 
 
     public logout() {
       this._isAuthenticated = false;
+      this.authenticatedUser = null;
     }
 
     public ngOnDestroy() {
